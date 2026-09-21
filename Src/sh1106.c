@@ -3,7 +3,7 @@
  * @author  Jose
  * @brief   Driver library for SH1106 OLED display (128x64) using I2C for STM32F1.
  * @date    13/9/26
- * @project tfg
+ * @project firmware-root
  */
 
 #include "sh1106.h"
