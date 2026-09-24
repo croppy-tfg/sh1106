@@ -268,3 +268,13 @@ void SH1106_Draw_Rectangle(SH1106_Handle_t *h, uint8_t x, uint8_t y, uint8_t wid
         SH1106_Draw_Pixel(h, x_end, j, state);
     }
 }
+
+void SH1106_Sleep(SH1106_Handle_t *disp_h)
+{
+    SH1106_Write_Command(disp_h, 0xAE);
+}
+
+void SH1106_Wakeup(SH1106_Handle_t *disp_h)
+{
+    SH1106_Write_Command(disp_h, 0xAF);
+}

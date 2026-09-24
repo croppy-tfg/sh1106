@@ -77,7 +77,8 @@ typedef struct {
 /**
   * @brief Initializes the display sending the appropiate I2C commands
   *
-  * @param None
+  * @param h handle
+  * @param config config struct ptr
   * @retval None
   */
 HAL_StatusTypeDef SH1106_Init(SH1106_Handle_t *h, const SH1106_Config_t *config);
@@ -85,7 +86,7 @@ HAL_StatusTypeDef SH1106_Init(SH1106_Handle_t *h, const SH1106_Config_t *config)
 /**
   * @brief Writes the content of the frame buffer into de GDDRAM
   *
-  * @param None
+  * @param h handle
   * @retval None
   */
 HAL_StatusTypeDef SH1106_Update_Screen(SH1106_Handle_t *h);
@@ -93,7 +94,7 @@ HAL_StatusTypeDef SH1106_Update_Screen(SH1106_Handle_t *h);
 /**
   * @brief Clears the display
   *
-  * @param None
+  * @param h handle
   * @retval None
   */
 void SH1106_Clear(SH1106_Handle_t *h);
@@ -101,9 +102,12 @@ void SH1106_Clear(SH1106_Handle_t *h);
 /**
  * @brief Writes a formatted string from a font map into the display at the given coordinates.
  *
+ * @param h handle
  * @param x: X
  * @param y: Y
- * @param format: the formatted text to write
+ * @param state: state enum
+ * @param font: font struct ptr
+ * @param text: text to write
  * @retval None
  */
 void SH1106_Draw_Text(SH1106_Handle_t *h, uint8_t x, uint8_t y, SH1106_Pixel_State_t state, const SH1106_Font_t *font, const char *text);
@@ -119,6 +123,7 @@ void SH1106_Draw_Text(SH1106_Handle_t *h, uint8_t x, uint8_t y, SH1106_Pixel_Sta
   *        pages. Then, the column offset (x) is added to find the exact byte,
   *        then the exact bit is selected using mod 8.
   *
+  * @param h handle
   * @param x: column [0, 127]
   * @param y: row [0, 31]
   * @param state: SH1106_PIXEL_ON (0x01) or SH1106_PIXEL_OFF (0x00)
@@ -129,11 +134,13 @@ void SH1106_Draw_Pixel(SH1106_Handle_t *h, uint8_t x, uint8_t y, SH1106_Pixel_St
 /**
   * @brief Draws a monochrome bitmap on the screen
   *
+  * @param h handle
   * @param x: starting column [0, 127]
   * @param y: starting row [0, 31]
   * @param bitmap: pointer to the image array
   * @param width: image width in pixels
   * @param height: image height in pixels
+  * @param state: state enum
   * @retval None
   */
 void SH1106_Draw_Bitmap(SH1106_Handle_t *h, uint8_t x, uint8_t y, const uint8_t *bitmap, uint8_t width, uint8_t height, SH1106_Pixel_State_t state);
@@ -141,6 +148,8 @@ void SH1106_Draw_Bitmap(SH1106_Handle_t *h, uint8_t x, uint8_t y, const uint8_t 
 /**
  * @brief Draws a line wether it is X/Y only or it has
  *        a slope, using the Bresenham algorithm
+ *
+ * @param h handle
  * @param x1: X1
  * @param y1: Y1
  * @param x2: X2
@@ -152,6 +161,7 @@ void SH1106_Draw_Line(SH1106_Handle_t *h, uint8_t x1, uint8_t y1, uint8_t x2, ui
 /**
  * @brief Draws a rectangle of a given dimensions from (x, y)
  *
+ * @param h handle
  * @param x: X start
  * @param y: Y start
  * @param width: X + width
@@ -159,5 +169,19 @@ void SH1106_Draw_Line(SH1106_Handle_t *h, uint8_t x1, uint8_t y1, uint8_t x2, ui
  * @param state: SH1106_PIXEL_ON/SH1106_PIXEL_OFF
  */
 void SH1106_Draw_Rectangle(SH1106_Handle_t *h, uint8_t x, uint8_t y, uint8_t width, uint8_t height, SH1106_Pixel_State_t state);
+
+/**
+ * @brief Turns the screen off
+ *
+ * @param h handle
+ */
+void SH1106_Sleep(SH1106_Handle_t *h);
+
+/**
+ * @brief Turns the screen on
+ *
+ * @param h handle
+ */
+void SH1106_Wakeup(SH1106_Handle_t *h);
 
 #endif // SH1106_H
